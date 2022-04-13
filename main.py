@@ -13,7 +13,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 def main():
     db_session.global_init("db/data.db")
     app.run()
-
+2
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
     form = RegisterForm()
