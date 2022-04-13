@@ -31,8 +31,6 @@ def _():
 def reqister():
     form = RegisterForm()
     if form.validate_on_submit():
-        msg = MIMEMultipart()
-        server = SMTP('smtp.gmail.com: 587')
         if validate(form.email.data):
             if form.password.data != form.password_again.data:
                 return render_template('register.html', title='Регистрация',
@@ -51,12 +49,6 @@ def reqister():
             user.set_password(form.password.data)
             db_sess.add(user)
             db_sess.commit()
-            message = 'Вы зарегистрировались'
-            msg.attach(MIMEText(message, 'plain'))
-            server.starttls()
-            server.login(from_email, password)
-            server.sendmail(from_email, form.email.data, msg.as_string())
-            server.quit()
             return redirect('/login')
         else:
             return render_template('register.html', title='Регистрация',
