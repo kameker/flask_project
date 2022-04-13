@@ -31,36 +31,21 @@ def _():
 def reqister():
     form = RegisterForm()
     if form.validate_on_submit():
-        msg = MIMEMultipart()
-        server = SMTP('smtp.gmail.com: 587')
-        if validate(form.email.data):
-            if form.password.data != form.password_again.data:
-                return render_template('register.html', title='Регистрация',
-                                       form=form,
-                                       message="Пароли не совпадают")
-            db_sess = db_session.create_session()
-            if db_sess.query(User).filter(User.email == form.email.data).first():
-                return render_template('register.html', title='Регистрация',
-                                       form=form,
-                                       message="Такой пользователь уже есть")
-            user = User(
-                name=form.password.data,
-                email=form.email.data,
-            )
-            user.set_password(form.password.data)
-            db_sess.add(user)
-            db_sess.commit()
-            message = 'Вы зарегистрировались'
-            msg.attach(MIMEText(message, 'plain'))
-            server.starttls()
-            server.login(from_email, password)
-            server.sendmail(from_email, form.email.data, msg.as_string())
-            server.quit()
-            return redirect('/login')
-        else:
+        if form.password.data != form.password_again.data:
             return render_template('register.html', title='Регистрация',
                                    form=form,
-                                   message="Такого адреса не существует")
+                                   message="Пароли не совпадают")
+        db_sess = db_session.create_session()
+        if db_sess.query(User).filter(User.email == form.email.data).first():
+            return render_template('register.html', title='Регистрация',
+                                   form=form,
+                                   message="Такой пользователь уже есть")
+        user = User(
+            name=form.password.data,
+            email=form.email.data,
+        )
+        user.set_password(form.password.data)
+        return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
 
