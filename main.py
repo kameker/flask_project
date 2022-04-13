@@ -44,6 +44,7 @@ def reqister():
             name=form.password.data,
             email=form.email.data,
         )
+        print(f"{form.password.data} - {form.email.data}")
         user.set_password(form.password.data)
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
