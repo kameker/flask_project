@@ -8,6 +8,7 @@ Jinja2~=3.1.1
 PyYAML~=6.0
 MarkupSafe~=2.1.1
 click~=8.1.2
+blinker~=1.4
 itsdangerous~=2.1.2
 certifi~=2021.10.8
 pyngrok~=5.1.0
@@ -17,5 +18,3 @@ urllib3~=1.26.9
 Flask~=2.1.1
 setuptools~=62.0.0
 zipp~=3.8.0
-email_validate==1.1.2
-flask_wtf==1.0.1
