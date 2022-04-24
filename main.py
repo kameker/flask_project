@@ -21,7 +21,7 @@ from_email = 'wqisup@gmail.com'
 password = 'Yq5-4DY-eJw-CMq'
 login_manager = LoginManager()
 login_manager.init_app(app)
-db_session.global_init("db/data.db")
+db_session.global_init("/home/kameker/flask_project/db/data.db")
 
 
 @login_manager.user_loader
