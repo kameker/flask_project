@@ -6,18 +6,19 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email_validate import validate
 from flask import Flask, render_template, url_for, redirect, request, make_response
-from flask_ngrok import run_with_ngrok
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from forms.login_user import LoginForm
 from forms.order import OrderForm
 from forms.reg_user import RegisterForm
 from forms.reviews import ReviewsForm
-from config import password, from_email
+
 from funs import pcheck
 from smtplib import SMTP
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+from_email = 'wqisup@gmail.com'
+password = 'Yq5-4DY-eJw-CMq'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -30,7 +31,6 @@ def load_user(user_id):
 
 def main():
     db_session.global_init("db/data.db")
-    run_with_ngrok(app)
     app.run()
 
 
@@ -69,7 +69,7 @@ def register():
                                        message="Пароли не совпадают")
 
             error = pcheck(form.password.data)
-            if error is not True:
+            if not error:
                 return render_template('register.html', title='Регистрация',
                                        form=form,
                                        message=error)
@@ -143,9 +143,9 @@ def basket():
         clear_basket()
         prices, total, length = 0, 0, 0
     else:
-        content = list(content.split("-"))
+        content = content.split("-")
         total, prices, length = read_csv(content)
-    return render_template("basket.html", content=content, prices=prices, total=total, len=length)
+    return render_template("basket.html", content=content, total=total, len=length)
 
 
 @app.route("/add/<item>")
@@ -162,7 +162,6 @@ def add_to_basket(item):
     resp = make_response(render_template("basket.html", content=content, prices=prices, total=total, len=len(content)))
     resp.set_cookie(current_user.email, "-".join(content), max_age=60 * 60 * 48)
     return resp
-
 
 
 @app.route("/clear_basket")
@@ -193,28 +192,28 @@ def review_form():
 @login_required
 def order():
     content = request.cookies.get(current_user.email)
-    if content == "":
-        msg="Для совершения заказа выберите хотя бы одно блюдо"
-        form, total = None, None
-    else:
+    if content != "":
         total, rest, rest1 = read_csv(content)
         form = OrderForm()
-        msg=None
+        msg = None
         resp = make_response(render_template("order.html", form=form, total=total, msg=msg))
         resp.set_cookie(current_user.email, "")
         return resp
     return redirect(url_for('msg'))
+
 
 @app.route('/msg')
 @login_required
 def msg():
     return render_template('msg.html')
 
+
 @app.route('/all_reviews')
 def all_reviews():
     db_sess = db_session.create_session()
     content = db_sess.query(Review)
     return render_template('all_reviews.html', content=content)
+
 
 if __name__ == '__main__':
     main()
