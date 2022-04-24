@@ -35,7 +35,7 @@ def main():
 
 
 def read_csv(content):
-    with open("static/csv/food_items.csv", encoding="utf8") as csvfile:
+    with open("/home/kameker/flask_project/static/csv/food_items.csv", encoding="utf8") as csvfile:
         reader = csv.reader(csvfile, delimiter="-")
         res = []
         for i in reader:
