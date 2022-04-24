@@ -125,7 +125,7 @@ def logout():
 @app.route("/menu")
 def menu():
     menu_list = []
-    with open('static/csv/food_items.csv', encoding='utf8') as csvfile:
+    with open('/home/kameker/flask_project/static/csv/food_items.csv', encoding='utf8') as csvfile:
         reader = csv.reader(csvfile, delimiter='-')
         for i, j in enumerate(reader):
             if i == 0:
