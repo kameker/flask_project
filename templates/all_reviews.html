@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+{% for item in content %}
+<div style="margin:30px;">
+{% include "_review.html"%}</div>
+{%  endfor %}
+{% endblock %}

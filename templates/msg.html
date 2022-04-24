@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>РЕГИСТРАЦИЯ</title>
+
+
+    <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+
+    </style>
+    <link href="{{url_for('static', filename='css/login.css')}}" rel="stylesheet">
+</head>
+<body class="text-center">
+<main class="form-signin">
+    <h1>Спасибо за покупку! Ожидайте звонка с подробностями доставки.</h1>
+    <h3><a href="{{url_for('index')}}">На главную.</a></h3>
+    <h3><a href="{{url_for('review_form')}}">Оставить свой отзыв.</a></h3>
+</main>
+</body>
+</html>
