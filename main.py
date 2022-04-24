@@ -21,6 +21,7 @@ from_email = 'wqisup@gmail.com'
 password = 'Yq5-4DY-eJw-CMq'
 login_manager = LoginManager()
 login_manager.init_app(app)
+db_session.global_init("db/data.db")
 
 
 @login_manager.user_loader
@@ -30,7 +31,6 @@ def load_user(user_id):
 
 
 def main():
-    db_session.global_init("db/data.db")
     app.run()
 
 
